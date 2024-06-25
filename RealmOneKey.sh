@@ -59,6 +59,15 @@ DynamicUser=true
 WorkingDirectory=/root/realm
 ExecStart=/root/realm/realm -c /root/realm/config.toml
 
+[Install]
+WantedBy=multi-user.target" > /etc/systemd/system/realm.service
+    systemctl daemon-reload
+    # 更新realm状态变量
+    realm_status="已安装"
+    realm_status_color="\033[0;32m" # 绿色
+    echo "部署完成。"
+}
+
 # 卸载realm
 uninstall_realm() {
     systemctl stop realm
@@ -70,15 +79,6 @@ uninstall_realm() {
     # 更新realm状态变量
     realm_status="未安装"
     realm_status_color="\033[0;31m" # 红色
-}
-
-[Install]
-WantedBy=multi-user.target" > /etc/systemd/system/realm.service
-    systemctl daemon-reload
-    # 更新realm状态变量
-    realm_status="已安装"
-    realm_status_color="\033[0;32m" # 绿色
-    echo "部署完成。"
 }
 
 # 删除转发规则的函数
